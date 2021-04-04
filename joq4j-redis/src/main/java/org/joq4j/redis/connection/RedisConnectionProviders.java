@@ -1,6 +1,5 @@
 package org.joq4j.redis.connection;
 
-import org.joq4j.redis.RedisConf;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

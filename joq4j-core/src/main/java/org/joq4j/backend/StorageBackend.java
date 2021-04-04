@@ -53,6 +53,10 @@ public interface StorageBackend extends Closeable {
                 || state.equals(JobState.CANCELLED);
     }
 
+    default boolean isJobPending(String jobId) {
+        return this.getState(jobId) == JobState.PENDING;
+    }
+
     default boolean isJobSuccess(String jobId) {
         return this.getState(jobId) == JobState.SUCCESS;
     }

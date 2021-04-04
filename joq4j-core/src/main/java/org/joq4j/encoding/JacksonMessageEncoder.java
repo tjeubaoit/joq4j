@@ -1,5 +1,7 @@
 package org.joq4j.encoding;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -9,7 +11,12 @@ import java.io.OutputStream;
 @SuppressWarnings("unchecked")
 public class JacksonMessageEncoder implements MessageEncoder {
 
-    static final ObjectMapper om = new ObjectMapper();
+    static final ObjectMapper om;
+
+    static {
+        om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+    }
 
     @Override
     public <T> void write(T input, OutputStream out) {

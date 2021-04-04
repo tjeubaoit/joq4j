@@ -25,6 +25,10 @@ public interface JobQueue {
 
     Job nextJob(String worker);
 
+    default List<Job> getQueueJobs() {
+        throw new UnsupportedOperationException();
+    }
+
     default List<Job> getPendingJobs() {
         throw new UnsupportedOperationException();
     }

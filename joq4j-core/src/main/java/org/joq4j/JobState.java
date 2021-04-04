@@ -9,6 +9,7 @@ public enum JobState implements Serializable {
     CREATED("created"),
     QUEUED("queued"),
     DEQUEUE("dequeue"),
+    PENDING("pending"),
     RUNNING("running"),
     SUCCESS("success"),
     FAILURE("failure"),

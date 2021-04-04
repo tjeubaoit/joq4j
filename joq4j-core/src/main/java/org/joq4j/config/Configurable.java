@@ -21,34 +21,34 @@ public interface Configurable {
                 ConfigDescriptor descriptor = field.getAnnotation(ConfigDescriptor.class);
                 String name = descriptor.name();
                 String defVal = descriptor.defaultValue();
-
                 if (!conf.containsKey(name) && !descriptor.allowMissing()) {
                     throw new ConfigException("Missing config value for key: " + name);
                 }
 
                 Class<?> type = field.getType();
                 if (type.isAssignableFrom(Integer.class) || type.equals(int.class)) {
-                    int val = conf.getInt(name, Integer.parseInt(defVal));
+                    int val = conf.getInt(name, defVal.equals("") ? 0 : Integer.parseInt(defVal));
                     validateNumberField(descriptor, val);
-                    field.setInt(this, val);
+                    field.set(this, val);
 
                 } else if (type.isAssignableFrom(Long.class) || type.equals(long.class)) {
-                    long val = conf.getLong(name, Long.parseLong(defVal));
+                    long val = conf.getLong(name, defVal.equals("")?0:Long.parseLong(defVal));
                     validateNumberField(descriptor, val);
-                    field.setLong(this, val);
+                    field.set(this, val);
 
                 } else if (type.isAssignableFrom(Boolean.class) || type.equals(boolean.class)) {
-                    field.setBoolean(this, conf.getBool(name, Boolean.parseBoolean(defVal)));
+                    field.set(this, conf.getBool(name, !defVal.equals("")
+                            && Boolean.parseBoolean(defVal)));
 
                 } else if (type.isAssignableFrom(Double.class) || type.equals(double.class)) {
-                    double val = conf.getDouble(name, Double.parseDouble(defVal));
+                    double val = conf.getDouble(name, defVal.equals("") ? 0 : Double.parseDouble(defVal));
                     validateNumberField(descriptor, val);
-                    field.setDouble(this, val);
+                    field.set(this, val);
 
                 } else if (type.isAssignableFrom(Float.class) || type.equals(float.class)) {
-                    float val = conf.getFloat(name, Float.parseFloat(defVal));
+                    float val = conf.getFloat(name, defVal.equals("") ? 0 : Float.parseFloat(defVal));
                     validateNumberField(descriptor, val);
-                    field.setFloat(this, val);
+                    field.set(this, val);
 
                 } else if (type.isAssignableFrom(Date.class)) {
                     Date defDate = DateTimes.parse(defVal, descriptor.datetimeFormat());

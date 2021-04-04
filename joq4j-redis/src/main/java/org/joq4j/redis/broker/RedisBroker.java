@@ -2,7 +2,8 @@ package org.joq4j.redis.broker;
 
 import org.joq4j.broker.Broker;
 import org.joq4j.broker.Subscriber;
-import org.joq4j.redis.RedisConf;
+import org.joq4j.config.Config;
+import org.joq4j.redis.connection.RedisConf;
 import org.joq4j.redis.connection.RedisConnectionProviders;
 import redis.clients.jedis.Jedis;
 
@@ -10,7 +11,11 @@ public class RedisBroker implements Broker {
     private Jedis jedis;
 
     public RedisBroker() {
-        this.jedis = RedisConnectionProviders.getDefault(new RedisConf());
+        this.jedis = RedisConnectionProviders.getDefault(new RedisConf(new Config()));
+    }
+
+    public RedisBroker(String url) {
+        this.jedis = RedisConnectionProviders.getDefault(new RedisConf(new Config(), url));
     }
 
     @Override

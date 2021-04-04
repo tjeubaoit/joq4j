@@ -1,4 +1,4 @@
-package org.joq4j.redis;
+package org.joq4j.redis.connection;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -55,12 +55,18 @@ class RedisConf implements Configurable {
         super();
     }
 
+    public RedisConf(String url){
+        super();
+        this.url = url;
+    }
+
     public RedisConf(Config conf) {
         this.configure(conf);
     }
 
-    public String url() {
-        return url(false);
+    public RedisConf(Config conf, String url) {
+        this.configure(conf);
+        this.url = url;
     }
 
     public String url(boolean withCredentials) {

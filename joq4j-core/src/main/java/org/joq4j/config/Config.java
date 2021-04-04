@@ -199,7 +199,7 @@ public class Config {
         try {
             return Double.parseDouble(getProperty(key));
         } catch (Exception e) {
-            throw  new ConfigException(e);
+            throw new ConfigException(e);
         }
     }
 
@@ -312,10 +312,16 @@ public class Config {
     }
 
     protected String getProperty(String key) {
-        return inst.getProperty(key);
+        if (inst.containsKey(key)) {
+            return inst.getProperty(key);
+        } else
+            return defaultProps.getProperty(key);
     }
 
     protected String getProperty(String key, String defVal) {
-        return inst.getProperty(key, defVal);
+        if (inst.containsKey(key)) {
+            return inst.getProperty(key, defVal);
+        } else
+            return defaultProps.getProperty(key, defVal);
     }
 }
